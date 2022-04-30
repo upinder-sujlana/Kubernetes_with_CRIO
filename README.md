@@ -78,8 +78,10 @@ conmon_cgroup = "pod"
 cgroup_manager = "cgroupfs"
 EOF
 
-Note :- Please realize that CRI-O is now configured to use "cgroupfs". Kubelet by default is always going to use systemd. 
-        At the point of cluster creation (kubeadm init), you need to create a "kubeadm-config.yaml" and tell kubelet to start with "cgroupfs" as well.
+Note :- Please realize that CRI-O is now configured to use "cgroupfs".
+        Kubelet by default is always going to use systemd. 
+        At the point of cluster creation (kubeadm init), you need to create
+        a "kubeadm-config.yaml" and tell kubelet to start with "cgroupfs" as well.
 
 [+] At this point CRI-O is installed and we can check by running below commands
 
@@ -100,8 +102,11 @@ apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 apt install -qq -y kubeadm=1.22.0-00 kubelet=1.22.0-00 kubectl=1.22.0-00
 
 
-[+] Create a file to tell kubelet to be configured to use cgroupfs
+[+] Create a file to tell kubelet to be configured to use cgroupfs.
+    Read more here:-
+    
 https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/
+
 root@controlplane:~# cat kubeadm-config.yaml
 kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
@@ -115,8 +120,11 @@ cgroupDriver: cgroupfs
 root@controlplane:~#
 
 
-[+] As I shall be using Flannel (ran into some challenges) change the ranges subnet to /24 from /16. Read more here:
+[+] As I shall be using Flannel (ran into some challenges) change the ranges
+    subnet to /24 from /16. Read more here:
+    
 https://stackoverflow.com/questions/62408028/kubelet-failed-to-createpodsandbox-for-coredns-failed-to-set-bridge-addr-c
+
 root@controlplane:/etc/cni/net.d# cat 100-crio-bridge.conf | grep -i ranges -A 1
         "ranges": [
             [{ "subnet": "10.85.0.0/24" }],
@@ -172,7 +180,8 @@ kubeadm join 192.168.1.80:6443 --token <snip> \
 root@controlplane:~#
 
 
-Note :- Verify that file /var/lib/kubelet/config.yaml used by kubelet, is created by kubeadm at cluster creation time & indeed has correctly picked up cgroupfs.
+Note :- Verify that file /var/lib/kubelet/config.yaml used by kubelet,
+        is created by kubeadm at cluster creation time & indeed has correctly picked up cgroupfs.
 root@controlplane:~# 
 root@controlplane:~# systemctl show --property=Environment kubelet
 Environment=[unprintable] KUBELET_CONFIG_ARGS=--config=/var/lib/kubelet/config.yaml
