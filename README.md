@@ -1,4 +1,6 @@
-### Notes of how I created a two node Kubernetes cluster that is using cri-o runtime in my home lab.
+#### At work have a product that uses cri-o runtime. So wanted to setup something at home. 
+#### These are my notes of how I created a two node Kubernetes cluster that is using cri-o runtime in my home lab.
+
 
 ```
 [+] Software , IP info
