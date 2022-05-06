@@ -92,6 +92,11 @@ Note :- Please realize that CRI-O is now configured to use "cgroupfs".
 
 [+] At this point CRI-O is installed and we can check by running below commands
 
+root@controlplane:~# systemctl status crio | grep -i tive
+     Active: active (running) since Thu 2022-05-05 19:12:08 PDT; 17h ago
+root@controlplane:~#
+
+
 root@controlplane:~# curl -s --unix-socket /var/run/crio/crio.sock http://localhost/info
 {"storage_driver":"overlay","storage_root":"/var/lib/containers/storage","cgroup_driver":"cgroupfs","default_id_mappings":{"uids":[{"container_id":0,"host_id":0,"size":4294967295}],"gids":[{"container_id":0,"host_id":0,"size":4294967295}]}}
 root@controlplane:~#
