@@ -81,6 +81,10 @@ conmon_cgroup = "pod"
 cgroup_manager = "cgroupfs"
 EOF
 
+sudo systemctl enable crio.service
+sudo systemctl start crio.service
+
+
 Note :- Please realize that CRI-O is now configured to use "cgroupfs".
         Kubelet by default is always going to use systemd. 
         At the point of cluster creation (kubeadm init), you need to create
